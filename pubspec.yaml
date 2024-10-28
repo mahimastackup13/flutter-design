@@ -25,7 +25,10 @@ flutter:
   assets:
     - assets/images/
 
-  # fonts:
-  #   - family: sans-serif
-  #     fonts:
-  #       - asset: assets/fonts/Sans Serif Font Family
+  fonts:
+    - family: sans-serif
+      fonts:
+        - asset: assets/fonts/Sans Serif Font Family/Roboto-Bold.ttf
+    - family: sans-serif Italic
+      fonts:
+        - asset: assets/fonts/Sans Serif Font Family/Roboto-BoldItalic.ttf

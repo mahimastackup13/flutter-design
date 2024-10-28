@@ -1,218 +1,163 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(TeamSelectorApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class TeamSelectorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: FavoriteTeamScreen(),
-    );
-  }
-}
-
-class FavoriteTeamScreen extends StatefulWidget {
-  const FavoriteTeamScreen({super.key});
-
-  @override
-  _FavoriteTeamScreenState createState() => _FavoriteTeamScreenState();
-}
-
-class _FavoriteTeamScreenState extends State<FavoriteTeamScreen> {
-  List<String> teamLogos = [
-    'assets/images/arsenal_2.png',
-    'assets/images/tottenham.png',
-    'assets/images/Chelsea.png',
-    'assets/images/liverpool.png',
-    'assets/images/brighton.png',
-    'assets/images/mancity.png',
-    'assets/images/manutd.png',
-    'assets/images/Fulham.png',
-    'assets/images/crystal palace.png',
-    'assets/images/wolverhampton.png',
-    'assets/images/AFC.png',
-    'assets/images/brentford.png',
-    'assets/images/forest.png',
-    'assets/images/lufc.png',
-    'assets/images/west-ham-united.png',
-  ];
-
-  List<bool> isSelected = List.generate(20, (index) => false);
-  int selectedCount = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text('What is Your Favorite Team?',
-            style: TextStyle(
-              fontSize: 30,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'assets/fonts/Sans Serif Font Family/Roboto-Bold.ttf',
-            )),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            const Text(
-              'Select 3 teams to customize the home feed',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-            const SizedBox(height: 25),
-            Expanded(
-              child: GridView.builder(
-                itemCount: teamLogos.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                ),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        if (selectedCount < 3 || isSelected[index]) {
-                          isSelected[index] = !isSelected[index];
-                          selectedCount += isSelected[index] ? 1 : -1;
-                        }
-                      });
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: isSelected[index]
-                          ? Colors.red[700]
-                          : Colors.grey[300],
-                      child: Image.asset(teamLogos[index]),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 80),
-            ElevatedButton(
-              onPressed: selectedCount == 3 ? () {} : null,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple, // button color
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-              ),
-              child: const Text(
-                'CONTINUE',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17,
-                  letterSpacing: 1.5,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    return MaterialApp(
+      home: TeamSelectionScreen(),
+      theme: ThemeData(fontFamily: 'sans-serif'),
     );
   }
 }
 
 class TeamSelectionScreen extends StatefulWidget {
-  const TeamSelectionScreen({super.key});
-
   @override
   _TeamSelectionScreenState createState() => _TeamSelectionScreenState();
 }
 
 class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
-  late List<bool> selectedTeams;
+  // List of team assets (replace these with actual image paths in your project)
+  List<String> teams = [
+    'assets/images/arsenal_3.png',
+    'assets/images/tottenham.png',
+    'assets/images/Chelsea.png',
+    'assets/images/liverpool1.png',
+    'assets/images/brighton1.png',
+    'assets/images/mancity_1.png',
+    'assets/images/manchester.png',
+    'assets/images/fulhamfc.png',
+    'assets/images/psg.png',
+    'assets/images/wolver.png',
+    'assets/images/everton.png',
+    'assets/images/barca.png',
+    'assets/images/forrest.png',
+    'assets/images/lu-fc.png',
+    'assets/images/westham.png',
+  ];
+
+  List<bool> selectedTeams = [];
 
   @override
   void initState() {
     super.initState();
-    // Initialize the list to track selected teams
-    selectedTeams = List.generate(teams.length, (index) => false);
+    selectedTeams =
+        List.generate(teams.length, (_) => false); // Initially none selected
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: GridView.count(
-          crossAxisCount: 3,
-          padding: const EdgeInsets.all(16),
-          children: List.generate(teams.length, (index) {
-            bool isSelected = selectedTeams[index];
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedTeams[index] = !selectedTeams[index];
-                });
-              },
-              child: Stack(
-                children: [
-                  // Circle Background with Grey or Red color
-                  ClipOval(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          // Top padding and time display
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0, bottom: 16.0),
+          ),
+          // Title Text
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            child: Text(
+              'What is Your Favorite Team?',
+              style: TextStyle(
+                fontSize: 25,
+                fontFamily: 'Roboto-bold',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Text(
+              'Select 3 teams to customize the home feed',
+              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            ),
+          ),
+          SizedBox(height: 16),
+          // Teams Grid
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3, // 3 columns
+                mainAxisSpacing: 16,
+                crossAxisSpacing: 16,
+              ),
+              itemCount: teams.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    if (selectedTeams.where((element) => element).length < 3 ||
+                        selectedTeams[index]) {
+                      setState(() {
+                        selectedTeams[index] = !selectedTeams[index];
+                      });
+                    }
+                  },
+                  child: Opacity(
+                    opacity:
+                        selectedTeams[index] ? 1.0 : 0.3, // Grey out unselected
                     child: Container(
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isSelected ? Colors.red : Colors.grey[400],
+                        shape: BoxShape.circle, // Makes the box circular
+                        color: selectedTeams[index]
+                            ? const Color.fromARGB(255, 167, 14,
+                                14) // Background color when selected
+                            : Colors
+                                .grey[300], // Background color when unselected
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.asset(
+                          teams[index],
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.contain, // Fit the logos in the circle
+                        ),
                       ),
                     ),
                   ),
-                  // Team Logo
-                  Center(
-                    child: SizedBox(
-                      width: 60, // Adjust logo size here
-                      height: 60,
-                      child: Image.asset(
-                        teams[index].logoPath,
-                        fit: BoxFit
-                            .contain, // Keep the logos contained in the same size
-                        color: isSelected
-                            ? null
-                            : Colors.grey, // Apply grey color if not selected
-                        colorBlendMode: isSelected ? null : BlendMode.modulate,
-                      ),
+                );
+              },
+            ),
+          ),
+          // Continue Button
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                if (selectedTeams.where((element) => element).length == 3) {
+                  // Implement the logic after selecting 3 teams
+                  print('Continue with selected teams');
+                } else {
+                  // Show an error if less than 3 teams are selected
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please select exactly 3 teams.'),
                     ),
-                  ),
-                ],
+                  );
+                }
+              },
+              child: Text('CONTINUE', style: TextStyle(fontSize: 18)),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.deepPurple,
+                minimumSize: Size(double.infinity, 50), // Full-width button
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
-            );
-          }),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {
-            // Continue button action
-          },
-          child: const Text("CONTINUE"),
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
-// Sample team data
-class Team {
-  final String name;
-  final String logoPath;
-  Team(this.name, this.logoPath);
-}
-
-// List of teams (replace with your image paths)
-List<Team> teams = [
-  Team('Arsenal', 'assets/arsenal_2png'),
-  Team('Tottenham', 'assets/tottenham.png'),
-  Team('Chelsea', 'assets/chelsea.png'),
-  // Add more teams as necessary...
-];
