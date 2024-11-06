@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(TeamSelectorApp());
-}
+import 'screen_2.dart';
 
 class TeamSelectorApp extends StatelessWidget {
   @override
@@ -10,6 +8,7 @@ class TeamSelectorApp extends StatelessWidget {
     return MaterialApp(
       home: TeamSelectionScreen(),
       theme: ThemeData(fontFamily: 'sans-serif'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -132,19 +131,16 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              onPressed: () {
-                if (selectedTeams.where((element) => element).length == 3) {
-                  // Implement the logic after selecting 3 teams
-                  print('Continue with selected teams');
-                } else {
-                  // Show an error if less than 3 teams are selected
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Please select exactly 3 teams.'),
-                    ),
-                  );
-                }
-              },
+              onPressed: selectedTeams.where((element) => element).length == 2
+                  ? () {
+                      // Navigate to Screen 2
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FootballHomeScreen()),
+                      );
+                    }
+                  : null, // Disable button if conditions are not met
               child: Text('CONTINUE', style: TextStyle(fontSize: 18)),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
