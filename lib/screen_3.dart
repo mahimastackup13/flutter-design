@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: MatchDetailScreen(),
-    // debugShowCheckedModeBanner: false,
-  ));
-}
-
 class MatchDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        toolbarHeight: 100,
         backgroundColor: Colors.white,
         elevation: 0,
         title: Row(
@@ -124,12 +119,23 @@ class MatchDetailScreen extends StatelessWidget {
     required String playerImage,
   }) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 16.0),
       child: Container(
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isHighlight ? Colors.purple[900] : Colors.white,
+          color: isHighlight
+              ? null
+              : Colors.white, // Use no color if highlighted, white otherwise
           borderRadius: BorderRadius.circular(12),
+          // Custom decoration for the vertical split
+          gradient: isHighlight
+              ? LinearGradient(
+                  colors: [Colors.purple[900]!, Colors.white],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.5, 0.5], // Ensures split is exactly half
+                )
+              : null, // No gradient for non-highlighted items
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -159,7 +165,7 @@ class MatchDetailScreen extends StatelessWidget {
                     title,
                     style: TextStyle(
                       color: isHighlight ? Colors.white : Colors.black,
-                      fontSize: 16,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -187,10 +193,11 @@ class MatchDetailScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(height: 20),
                     Text(
                       player,
                       style: TextStyle(
-                        color: isHighlight ? Colors.white : Colors.black,
+                        color: isHighlight ? Colors.black : Colors.black,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
@@ -200,15 +207,18 @@ class MatchDetailScreen extends StatelessWidget {
                         assist,
                         style: TextStyle(
                           color:
-                              isHighlight ? Colors.white70 : Colors.grey[600],
+                              isHighlight ? Colors.grey[600] : Colors.grey[600],
                           fontSize: 12,
                         ),
                       ),
                   ],
                 ),
-                CircleAvatar(
-                  backgroundImage: AssetImage(playerImage),
-                  radius: 20,
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage(playerImage),
+                    radius: 20,
+                  ),
                 ),
               ],
             ),

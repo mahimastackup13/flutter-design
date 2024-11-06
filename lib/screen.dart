@@ -101,24 +101,36 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                   child: Opacity(
                     opacity:
                         selectedTeams[index] ? 1.0 : 0.3, // Grey out unselected
+
                     child: Container(
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle, // Makes the box circular
                         color: selectedTeams[index]
-                            ? const Color.fromARGB(255, 167, 14,
-                                14) // Background color when selected
+                            ? const Color.fromARGB(255, 203, 78,
+                                20) // Background color when selected
                             : Colors
                                 .grey[300], // Background color when unselected
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.asset(
-                          teams[index],
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.contain, // Fit the logos in the circle
+                        child: ColorFiltered(
+                          colorFilter: selectedTeams[index]
+                              ? ColorFilter.mode(Colors.transparent,
+                                  BlendMode.multiply) // No filter when selected
+                              : ColorFilter.matrix(<double>[
+                                  0.2126, 0.7152, 0.0722, 0, 0, // Red channel
+                                  0.2126, 0.7152, 0.0722, 0, 0, // Green channel
+                                  0.2126, 0.7152, 0.0722, 0, 0, // Blue channel
+                                  0, 0, 0, 1, 0, // Alpha channel
+                                ]), // Grayscale filter when unselected
+                          child: Image.asset(
+                            teams[index],
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.contain, // Fit the logos in the circle
+                          ),
                         ),
                       ),
                     ),
@@ -134,7 +146,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
               onPressed: selectedTeams.where((element) => element).length == 2
                   ? () {
                       // Navigate to Screen 2
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => FootballHomeScreen()),
