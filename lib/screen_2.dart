@@ -22,17 +22,13 @@ class _FootballHomeScreenState extends State<FootballHomeScreen> {
 
   void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index; // Update the selected tab
+      selectedIndex = index;
     });
 
-    // Optionally, you can navigate to the corresponding screen
     if (index == 4) {
-      // Index 4 corresponds to the 'Favorites' tab
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-            builder: (context) =>
-                TeamSelectionScreen()), // Make sure FavoritesScreen is correctly defined
+        MaterialPageRoute(builder: (context) => TeamSelectionScreen()),
       );
     }
   }
@@ -88,7 +84,7 @@ class _FootballHomeScreenState extends State<FootballHomeScreen> {
                         Padding(
                           padding: EdgeInsets.only(top: 2),
                           child: Image.asset(
-                            'assets/images/lion.png', // Replace with your image path
+                            'assets/images/lion.png',
                             width: 24,
                             height: 24,
                             color: Colors.white,
@@ -139,24 +135,20 @@ class _FootballHomeScreenState extends State<FootballHomeScreen> {
                         ),
                         Expanded(
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment
-                                .center, // Vertically center all children
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment
-                                    .center, // Horizontally center the scores and 'vs'
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    '4', // Team 1 score
+                                    '4',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 35,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
-                                      width:
-                                          15), // Space between the score and 'vs'
+                                  SizedBox(width: 15),
                                   Container(
                                     width: 40,
                                     height: 40,
@@ -182,9 +174,7 @@ class _FootballHomeScreenState extends State<FootballHomeScreen> {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
-                                      width:
-                                          15), // Space between 'vs' and the next score
+                                  SizedBox(width: 15),
                                   Text(
                                     '2', // Team 2 score
                                     style: TextStyle(
@@ -195,9 +185,7 @@ class _FootballHomeScreenState extends State<FootballHomeScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                  height:
-                                      0.1), // Space between the score and time/venue
+                              SizedBox(height: 0.1),
                               Container(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 1, horizontal: 15),
@@ -263,7 +251,6 @@ class _FootballHomeScreenState extends State<FootballHomeScreen> {
             ),
           ),
           SizedBox(height: 16),
-          // Adding MatchCard widgets here
           MatchCard(
             team1: 'Arsenal',
             team2: 'Chelsea',

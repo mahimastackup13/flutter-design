@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'screen_2.dart';
+
+void main() {
+  runApp(TeamSelectorApp());
+}
 
 class TeamSelectorApp extends StatelessWidget {
   @override
@@ -19,7 +22,6 @@ class TeamSelectionScreen extends StatefulWidget {
 }
 
 class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
-  // List of team assets (replace these with actual image paths in your project)
   List<String> teams = [
     'assets/images/arsenal_3.png',
     'assets/images/tottenham.png',
@@ -43,8 +45,7 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
   @override
   void initState() {
     super.initState();
-    selectedTeams =
-        List.generate(teams.length, (_) => false); // Initially none selected
+    selectedTeams = List.generate(teams.length, (_) => false);
   }
 
   @override
@@ -53,11 +54,9 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          // Top padding and time display
           Padding(
             padding: const EdgeInsets.only(top: 40.0, bottom: 16.0),
           ),
-          // Title Text
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
@@ -73,12 +72,12 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
-              'Select 3 teams to customize the home feed',
+              'Select 2 teams to customize the home feed',
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
           ),
           SizedBox(height: 16),
-          // Teams Grid
+
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(16.0),
@@ -99,37 +98,49 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
                     }
                   },
                   child: Opacity(
-                    opacity:
-                        selectedTeams[index] ? 1.0 : 0.3, // Grey out unselected
-
+                    opacity: selectedTeams[index] ? 1.0 : 0.3,
                     child: Container(
                       width: 100,
                       height: 100,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle, // Makes the box circular
+                        shape: BoxShape.circle,
                         color: selectedTeams[index]
-                            ? const Color.fromARGB(255, 203, 78,
-                                20) // Background color when selected
-                            : Colors
-                                .grey[300], // Background color when unselected
+                            ? const Color.fromARGB(255, 203, 78, 20)
+                            : Colors.grey[300],
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ColorFiltered(
                           colorFilter: selectedTeams[index]
-                              ? ColorFilter.mode(Colors.transparent,
-                                  BlendMode.multiply) // No filter when selected
+                              ? ColorFilter.mode(
+                                  Colors.transparent, BlendMode.multiply)
                               : ColorFilter.matrix(<double>[
-                                  0.2126, 0.7152, 0.0722, 0, 0, // Red channel
-                                  0.2126, 0.7152, 0.0722, 0, 0, // Green channel
-                                  0.2126, 0.7152, 0.0722, 0, 0, // Blue channel
-                                  0, 0, 0, 1, 0, // Alpha channel
-                                ]), // Grayscale filter when unselected
+                                  0.2126,
+                                  0.7152,
+                                  0.0722,
+                                  0,
+                                  0,
+                                  0.2126,
+                                  0.7152,
+                                  0.0722,
+                                  0,
+                                  0,
+                                  0.2126,
+                                  0.7152,
+                                  0.0722,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  1,
+                                  0,
+                                ]),
                           child: Image.asset(
                             teams[index],
                             width: 80,
                             height: 80,
-                            fit: BoxFit.contain, // Fit the logos in the circle
+                            fit: BoxFit.contain,
                           ),
                         ),
                       ),
@@ -139,25 +150,37 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
               },
             ),
           ),
+
           // Continue Button
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: selectedTeams.where((element) => element).length == 2
                   ? () {
-                      // Navigate to Screen 2
+                      // Collect selected team images
+                      List<String> selectedTeamImages = [];
+                      for (int i = 0; i < teams.length; i++) {
+                        if (selectedTeams[i]) {
+                          selectedTeamImages.add(teams[i]);
+                        }
+                      }
+
+                      // Navigate to FootballHomeScreen with selected teams
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => FootballHomeScreen()),
+                          builder: (context) => FootballHomeScreen(
+                              // selectedTeamImages: selectedTeamImages,
+                              ),
+                        ),
                       );
                     }
-                  : null, // Disable button if conditions are not met
+                  : null,
               child: Text('CONTINUE', style: TextStyle(fontSize: 18)),
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
                 backgroundColor: Colors.deepPurple,
-                minimumSize: Size(double.infinity, 50), // Full-width button
+                minimumSize: Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -169,3 +192,25 @@ class _TeamSelectionScreenState extends State<TeamSelectionScreen> {
     );
   }
 }
+
+// class FootballHomeScreen extends StatelessWidget {
+//   final List<String> selectedTeamImages;
+
+//   FootballHomeScreen({required this.selectedTeamImages});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Selected Teams')),
+//       body: ListView.builder(
+//         itemCount: selectedTeamImages.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             leading: Image.asset(selectedTeamImages[index]),
+//             title: Text('Team ${index + 1}'),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

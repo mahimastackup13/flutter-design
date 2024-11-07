@@ -26,17 +26,25 @@ class MatchDetailScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 20),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   decoration: BoxDecoration(
-                    color: Colors.grey[100],
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.greenAccent),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.greenAccent, width: 2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
                   ),
                   child: Text(
                     '45+4\'',
                     style: TextStyle(
                       color: Colors.greenAccent,
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -61,7 +69,7 @@ class MatchDetailScreen extends StatelessWidget {
           children: [
             _buildTimelineItem(
               time: '43\'',
-              title: 'GOOOL!!!',
+              title: 'GOOOLaaa!!!',
               player: 'Frederico Rodrigues Santos',
               assist: 'Goal Assist: Harry Maguire',
               isHighlight: true,
@@ -123,19 +131,16 @@ class MatchDetailScreen extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isHighlight
-              ? null
-              : Colors.white, // Use no color if highlighted, white otherwise
+          color: isHighlight ? null : Colors.white,
           borderRadius: BorderRadius.circular(12),
-          // Custom decoration for the vertical split
           gradient: isHighlight
               ? LinearGradient(
                   colors: [Colors.purple[900]!, Colors.white],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  stops: [0.5, 0.5], // Ensures split is exactly half
+                  stops: [0.5, 0.5],
                 )
-              : null, // No gradient for non-highlighted items
+              : null,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
